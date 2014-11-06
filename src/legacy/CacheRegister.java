@@ -10,7 +10,11 @@ public class CacheRegister {
     private FiscalDevice fiscalDevice;
 
     public CacheRegister() {
-        fiscalDevice = new FiscalDevice();
+        this(new FiscalDevice());
+    }
+
+    public CacheRegister(FiscalDevice fiscalDevice) {
+        this.fiscalDevice = fiscalDevice;
     }
 
     public boolean sellItem(ItemRegistry registry, String itemName) {
