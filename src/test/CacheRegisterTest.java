@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import stubs.FiscalDeviceStub;
+import stubs.ItemRegistryStub;
 
 public class CacheRegisterTest {
 
@@ -18,7 +19,7 @@ public class CacheRegisterTest {
 	@Before
 	public void setUp() {
 		register = new CacheRegister(new FiscalDeviceStub());
-		registry = new ItemRegistry();
+		registry = new ItemRegistryStub();
 	}
 
 	@Test
