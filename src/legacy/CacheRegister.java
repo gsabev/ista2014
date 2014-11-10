@@ -7,7 +7,7 @@ import legacy.ItemTransaction.Type;
 
 public class CacheRegister {
 
-	private List<ItemTransaction> salesData = null;
+	private List<ItemTransaction> itemTransactions = null;
 
 	private FiscalDevice fiscalDevice;
 
@@ -16,21 +16,38 @@ public class CacheRegister {
 	}
 
 	public CacheRegister(FiscalDevice fiscalDevice) {
-		this.salesData = new ArrayList<ItemTransaction>();
+		this.itemTransactions = new ArrayList<ItemTransaction>();
 		this.fiscalDevice = fiscalDevice;
 	}
 
 	public boolean sellItem(Item item) {
 		fiscalDevice.registerSaleSum(item.getPrice());
-		return salesData.add(new ItemTransaction(Type.SALE, item));
+		return itemTransactions.add(new ItemTransaction(Type.SALE, item));
 	}
 
 	public boolean returnItem(Item item) {
 		fiscalDevice.registerReturnSum(item.getPrice());
-		if (!salesData.contains(new ItemTransaction(Type.SALE, item))) {
+		if (!itemTransactions.contains(new ItemTransaction(Type.SALE, item))) {
 			return false;
 		}
-		return salesData.add(new ItemTransaction(Type.RETURN, item));
+		return itemTransactions.add(new ItemTransaction(Type.RETURN, item));
+	}
+
+	public boolean scrapItem(Item item) {
+		if (sold(item) && !returned(item)) {
+			return false;
+		}
+		return itemTransactions.add(new ItemTransaction(Type.SCRAP, item));
+	}
+
+	private boolean sold(Item item) {
+		ItemTransaction aSale = new ItemTransaction(Type.SALE, item);
+		return itemTransactions.contains(aSale);
+	}
+
+	private boolean returned(Item item) {
+		ItemTransaction aReturn = new ItemTransaction(Type.RETURN, item);
+		return itemTransactions.contains(aReturn);
 	}
 
 	public int successfulSales() {
@@ -45,9 +62,13 @@ public class CacheRegister {
 		return count(Type.RETURN);
 	}
 
+	public int scrappedItems() {
+		return count(Type.SCRAP);
+	}
+
 	private int count(ItemTransaction.Type type) {
 		int total = 0;
-		for (ItemTransaction itemTransaction : salesData) {
+		for (ItemTransaction itemTransaction : itemTransactions) {
 			if (itemTransaction.getType() == type) {
 				++total;
 			}

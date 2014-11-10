@@ -77,4 +77,30 @@ public class CacheRegisterTest {
 		register.returnItem(pencil);
 		assertEquals(2, register.totalSales());
 	}
+
+	@Test
+	public void testSctrapNewItem() {
+		boolean success = register.scrapItem(new Item("pen", 2.99));
+		assertTrue(success);
+		assertEquals(1, register.scrappedItems());
+	}
+
+	@Test
+	public void testSctrapReturnedItem() {
+		Item pen = new Item("pen", 2.99);
+		register.sellItem(pen);
+		register.returnItem(pen);
+		boolean success = register.scrapItem(pen);
+		assertTrue(success);
+		assertEquals(1, register.scrappedItems());
+	}
+
+	@Test
+	public void testSctrapSoldItem() {
+		Item pen = new Item("pen", 2.99);
+		register.sellItem(pen);
+		boolean success = register.scrapItem(pen);
+		assertEquals(false, success);
+		assertEquals(0, register.scrappedItems());
+	}
 }

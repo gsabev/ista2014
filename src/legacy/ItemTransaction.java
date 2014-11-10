@@ -3,7 +3,7 @@ package legacy;
 public class ItemTransaction {
 
 	public enum Type {
-		SALE, RETURN
+		SALE, RETURN, SCRAP
 	}
 
 	Type type;
