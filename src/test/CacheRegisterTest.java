@@ -40,14 +40,9 @@ public class CacheRegisterTest {
 		Item pen = new Item("pen", 2.99);
 		boolean sale1 = register.sellItem(pen);
 		boolean sale2 = register.sellItem(pen);
-		// TODO : Fix bug CR-325 (logged)
-		// It should be possible to sell two pens
 
-		// assertTrue(sale1 && sale2);
-		// assertEquals(2, register.successfulSales());
-		assertEquals(true, sale1);
-		assertEquals(false, sale2);
-		assertEquals(1, register.successfulSales());
+		assertTrue(sale1 && sale2);
+		assertEquals(2, register.successfulSales());
 	}
 
 	@Test

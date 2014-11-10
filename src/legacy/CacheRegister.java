@@ -1,11 +1,11 @@
 package legacy;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CacheRegister {
 
-	private Set<Item> salesData = null;
+	private List<Item> salesData = null;
 	private int numberOfSales, numberOfReturns = 0;
 
 	private FiscalDevice fiscalDevice;
@@ -15,7 +15,7 @@ public class CacheRegister {
 	}
 
 	public CacheRegister(FiscalDevice fiscalDevice) {
-		this.salesData = new HashSet<Item>();
+		this.salesData = new ArrayList<Item>();
 		this.fiscalDevice = fiscalDevice;
 	}
 
