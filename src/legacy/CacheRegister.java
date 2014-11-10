@@ -3,10 +3,11 @@ package legacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import legacy.ItemTransaction.Type;
+
 public class CacheRegister {
 
-	private List<Item> salesData = null;
-	private int numberOfSales, numberOfReturns = 0;
+	private List<ItemTransaction> salesData = null;
 
 	private FiscalDevice fiscalDevice;
 
@@ -15,31 +16,42 @@ public class CacheRegister {
 	}
 
 	public CacheRegister(FiscalDevice fiscalDevice) {
-		this.salesData = new ArrayList<Item>();
+		this.salesData = new ArrayList<ItemTransaction>();
 		this.fiscalDevice = fiscalDevice;
 	}
 
 	public boolean sellItem(Item item) {
-		numberOfSales++;
 		fiscalDevice.registerSaleSum(item.getPrice());
-		return salesData.add(item);
+		return salesData.add(new ItemTransaction(Type.SALE, item));
 	}
 
 	public boolean returnItem(Item item) {
-		numberOfReturns++;
 		fiscalDevice.registerReturnSum(item.getPrice());
-		return salesData.remove(item);
+		if (!salesData.contains(new ItemTransaction(Type.SALE, item))) {
+			return false;
+		}
+		return salesData.add(new ItemTransaction(Type.RETURN, item));
 	}
 
 	public int successfulSales() {
-		return salesData.size();
+		return count(Type.SALE) - count(Type.RETURN);
 	}
 
 	public int totalSales() {
-		return numberOfSales;
+		return count(Type.SALE);
 	}
 
 	public int returnedItems() {
-		return numberOfReturns;
+		return count(Type.RETURN);
+	}
+
+	private int count(ItemTransaction.Type type) {
+		int total = 0;
+		for (ItemTransaction itemTransaction : salesData) {
+			if (itemTransaction.getType() == type) {
+				++total;
+			}
+		}
+		return total;
 	}
 }

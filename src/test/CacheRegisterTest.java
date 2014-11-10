@@ -58,11 +58,7 @@ public class CacheRegisterTest {
 	public void testReturnNoSales() {
 		boolean successfulReturn = register.returnItem(new Item("pen", 2.99));
 		assertEquals(false, successfulReturn);
-		// TODO : fix bug CR-345 (logged). Unsuccessful returns should
-		// not be counted
-
-		// assertEquals(0, register.returnedItems());
-		assertEquals(1, register.returnedItems());
+		assertEquals(0, register.returnedItems());
 	}
 
 	@Test
@@ -70,9 +66,7 @@ public class CacheRegisterTest {
 		register.sellItem(new Item("pen", 2.99));
 		boolean success = register.returnItem(new Item("bird", 21.99));
 		assertEquals(false, success);
-		// TODO : Bug CR-345 (see above)
-		// assertEquals(0, register.returnedItems());
-		assertEquals(1, register.returnedItems());
+		assertEquals(0, register.returnedItems());
 	}
 
 	@Test

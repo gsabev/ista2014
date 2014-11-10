@@ -18,4 +18,8 @@ public class Item {
 		return price;
 	}
 
+	public int getId() {
+		return hashCode();
+	}
+
 }
