@@ -18,7 +18,7 @@ public class CacheRegister {
 		this.fiscalDevice = fiscalDevice;
 	}
 
-	public boolean sellItem(ItemRegistry registry, String itemName) {
+	public boolean sellItem(ItemCatalog registry, String itemName) {
 		if (salesData == null) {
 			salesData = new HashSet();
 		}
@@ -27,7 +27,7 @@ public class CacheRegister {
 		return salesData.add(itemName);
 	}
 
-	public boolean returnItem(ItemRegistry registry, String itemName) {
+	public boolean returnItem(ItemCatalog registry, String itemName) {
 		if (salesData == null) {
 			salesData = new HashSet();
 		}
